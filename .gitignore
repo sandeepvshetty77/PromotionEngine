@@ -3,3 +3,8 @@
 ################################################################################
 
 /.vs
+/bin/Debug
+/obj
+/packages
+/UnitTestPromotionEngine/bin/Debug
+/UnitTestPromotionEngine/obj
