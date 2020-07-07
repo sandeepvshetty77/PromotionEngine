@@ -8,5 +8,9 @@ namespace PromotionEngineNS
 {
     public class PromotionEngine
     {
+        public int GetFinalTotal()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

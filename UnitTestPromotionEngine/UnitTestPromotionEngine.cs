@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PromotionEngineNS;
 
 namespace UnitTestPromotionEngine
 {
@@ -7,8 +8,11 @@ namespace UnitTestPromotionEngine
     public class UnitTestPromotionEngine
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestEmptyCart()
         {
+            PromotionEngine promotionEngine = new PromotionEngine();
+            int finalTotal = promotionEngine.GetFinalTotal();
+            Assert.AreEqual(0, finalTotal);
         }
     }
 }
