@@ -8,9 +8,24 @@ namespace PromotionEngineNS
 {
     public class PromotionEngine
     {
+        private string _cart;
+        private int _finalTotal = 0;
+
+        public PromotionEngine()
+        {
+            _cart = String.Empty;
+            _finalTotal = 0;
+        }
+
+        public PromotionEngine(string cart)
+        {
+            _cart = cart.Trim();
+            _finalTotal = 0;
+        }
+
         public int GetFinalTotal()
         {
-            throw new NotImplementedException();
+            return _finalTotal;
         }
     }
 }

@@ -8,9 +8,17 @@ namespace UnitTestPromotionEngine
     public class UnitTestPromotionEngine
     {
         [TestMethod]
-        public void TestEmptyCart()
+        public void TestNullCart()
         {
             PromotionEngine promotionEngine = new PromotionEngine();
+            int finalTotal = promotionEngine.GetFinalTotal();
+            Assert.AreEqual(0, finalTotal);
+        }
+
+        [TestMethod]
+        public void TestEmptyCart()
+        {
+            PromotionEngine promotionEngine = new PromotionEngine("");
             int finalTotal = promotionEngine.GetFinalTotal();
             Assert.AreEqual(0, finalTotal);
         }
