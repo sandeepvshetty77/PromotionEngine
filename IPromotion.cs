@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PromotionEngineNS
 {
-    interface IPromotion
+    public interface IPromotion
     {
         int GetSavingsOnDiscount(List<SKU> skus);
     }

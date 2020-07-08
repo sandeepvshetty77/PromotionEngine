@@ -22,7 +22,39 @@ namespace PromotionEngineNS
 
         public int GetSavingsOnDiscount(List<SKU> skus)
         {
-            throw new NotImplementedException();
+            int savings = 0;
+            int totalNumberOfDiscountedSKUsInCart = 0;
+
+            SKU sku = Inventory.GetSKUIfInStore(_skuId);
+            if (sku == null)
+                return savings;
+
+            int originalPriceOfDiscountedSKU = sku.Price;
+
+            foreach (SKU skuItem in skus)
+            {
+                if (skuItem.Id.Equals(_skuId))
+                {
+                    totalNumberOfDiscountedSKUsInCart++;                    
+                }
+            }
+
+            // discountedUnit = 6 / 3 = 2
+            int discountedUnit = totalNumberOfDiscountedSKUsInCart / _numOfItems;
+
+            if (discountedUnit != 0)
+            {
+                // totalPrice  = 6 * 50 = 300
+                int totalPrice = totalNumberOfDiscountedSKUsInCart * originalPriceOfDiscountedSKU;
+
+                // priceAfterDiscount = 2 * 130 = 260
+                int priceAfterDiscount = discountedUnit * _fixedPrice;
+
+                // savings = 300 - 260 = 40
+                savings = totalPrice - priceAfterDiscount;
+            }
+
+            return savings;
         }
     }
 }

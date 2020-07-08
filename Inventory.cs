@@ -25,7 +25,7 @@ namespace PromotionEngineNS
 
             if (_itemsInStore.Count > 0)
             {
-                skuFound = _itemsInStore.FirstOrDefault(x => x.Id == char.ToUpperInvariant(skuId));
+                skuFound = _itemsInStore.FirstOrDefault(x => x.Id.Equals(char.ToUpperInvariant(skuId)));
             }
 
             return skuFound;
