@@ -45,7 +45,7 @@ namespace UnitTestPromotionEngine
             int finalTotal = promotionEngine.GetFinalTotal();
             Assert.AreEqual(0, finalTotal);
         }
-
+        
         [TestMethod]
         [DataRow("A", 50)]
         [DataRow("B", 30)]
@@ -158,6 +158,33 @@ namespace UnitTestPromotionEngine
         [DataRow("A, A, A, B, B, C, D, A, B, C", 130 + 45 + 30 + 50 + 30 + 20)]
         [DataRow("A, A, A, B, B, C, D, A, B, D", 130 + 45 + 30 + 50 + 30 + 15)]
         public void Test_Combine_ALl_Promotions_Wih_Other_SKUs(string cart, int expectedTotal)
+        {
+            PromotionEngine promotionEngine = new PromotionEngine(cart);
+            int finalTotal = promotionEngine.GetFinalTotal();
+            Assert.AreEqual(expectedTotal, finalTotal);
+        }
+
+        [TestMethod]
+        [DataRow("A, B, C", 100)]
+        public void Test_As_Per_Scenario_A(string cart, int expectedTotal)
+        {
+            PromotionEngine promotionEngine = new PromotionEngine(cart);
+            int finalTotal = promotionEngine.GetFinalTotal();
+            Assert.AreEqual(expectedTotal, finalTotal);
+        }
+
+        [TestMethod]
+        [DataRow("A, A, A, A, A, B, B, B, B, B, C", 370)]
+        public void Test_As_Per_Scenario_B(string cart, int expectedTotal)
+        {
+            PromotionEngine promotionEngine = new PromotionEngine(cart);
+            int finalTotal = promotionEngine.GetFinalTotal();
+            Assert.AreEqual(expectedTotal, finalTotal);
+        }
+
+        [TestMethod]
+        [DataRow("A, A, A, B, B, B, B, B, C, D", 280)]
+        public void Test_As_Per_Scenario_C(string cart, int expectedTotal)
         {
             PromotionEngine promotionEngine = new PromotionEngine(cart);
             int finalTotal = promotionEngine.GetFinalTotal();
