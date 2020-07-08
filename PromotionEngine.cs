@@ -31,23 +31,40 @@ namespace PromotionEngineNS
             }
             else
             {
-                SKU sku = getSKUsFromCart(_cart);
-                _finalTotal = sku.Price;                
+                List<SKU> skuList = getSKUsFromCart(_cart);
+                foreach (SKU sku in skuList)
+                {
+                    _finalTotal += sku.Price;
+                }
+                
             }
             return _finalTotal;
         }
 
-        private SKU getSKUsFromCart(string cart)
+        private List<SKU> getSKUsFromCart(string cart)
         {
             string skuId = String.Empty;
+            List<SKU> skuList = null;
             SKU sku = null;
-            skuId = cart.Trim().ToUpperInvariant();
-            if (skuId.Length == 1)
-            {
-                sku = Inventory.GetSKUIfInStore(skuId[0]);
-            }
 
-            return sku;
+            string[] skuIds = cart.Split(',');
+            for (int index = 0; index < skuIds.Length; index++)
+            {
+                skuId = skuIds[index].Trim().ToUpperInvariant();
+                if (skuId.Length == 1)
+                {
+                    sku = Inventory.GetSKUIfInStore(skuId[0]);
+                    if (sku != null)
+                    {
+                        if (skuList == null)
+                        {
+                            skuList = new List<SKU>();
+                        }
+                        skuList.Add(sku);
+                    }
+                }
+            }
+            return skuList;
         }
     }
 }

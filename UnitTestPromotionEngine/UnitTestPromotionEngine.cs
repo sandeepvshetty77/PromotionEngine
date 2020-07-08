@@ -49,5 +49,31 @@ namespace UnitTestPromotionEngine
             int finalTotal = promotionEngine.GetFinalTotal();
             Assert.AreEqual(expectedTotal, finalTotal);
         }
+
+        [TestMethod]
+        [DataRow("A, B", (50+30))]
+        [DataRow("B, C", (30+20))]
+        [DataRow("A, C", (50+20))]
+        [DataRow("D, A", (15+50))]
+        [DataRow("D, a", (15+50))]
+        public void Test_Multiple_Valid_SKUs_In_Cart(string cart, int expectedTotal)
+        {
+            PromotionEngine promotionEngine = new PromotionEngine(cart);
+            int finalTotal = promotionEngine.GetFinalTotal();
+            Assert.AreEqual(expectedTotal, finalTotal);
+        }
+
+        [TestMethod]
+        [DataRow("A, B, 1", (50 + 30))]
+        [DataRow("B, C, g", (30 + 20))]
+        [DataRow("A, C, H", (50 + 20))]
+        [DataRow("D, A, PQR", (15 + 50))]
+        [DataRow("D, a, 12", (15 + 50))]
+        public void Test_Multiple_Valid_And_Invalid_SKUs_In_Cart(string cart, int expectedTotal)
+        {
+            PromotionEngine promotionEngine = new PromotionEngine(cart);
+            int finalTotal = promotionEngine.GetFinalTotal();
+            Assert.AreEqual(expectedTotal, finalTotal);
+        }
     }
 }
