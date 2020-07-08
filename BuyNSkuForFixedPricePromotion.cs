@@ -17,10 +17,13 @@ namespace PromotionEngineNS
 
         public int GetSavingsOnDiscount(List<SKU> skus)
         {
-            int savings = 0;
-            int totalNumberOfDiscountedSKUsInCart = 0;
+            if (skus == null || skus.Count == 0)
+                return 0;
 
-            int originalPriceOfDiscountedSKU = Inventory.GetPriceOfSKUBySKUId(_skuId);
+            int savings = 0;
+            int totalNumberOfDiscountedSKUsInCart = 0; // say 6 As  
+
+            int originalPriceOfDiscountedSKU = Inventory.GetPriceBySKUId(_skuId);
             if (originalPriceOfDiscountedSKU == 0)
                 return savings;
 
@@ -32,19 +35,16 @@ namespace PromotionEngineNS
                 }
             }
 
-            // discountedUnit = 6 / 3 = 2
-            int discountedUnit = totalNumberOfDiscountedSKUsInCart / _numOfItems;
+            // noOfDiscountedUnits = 6 / 3 = 2  = 2 sets of AAA
+            int noOfDiscountedUnits = totalNumberOfDiscountedSKUsInCart / _numOfItems;
 
-            if (discountedUnit != 0)
+            if (noOfDiscountedUnits != 0)
             {
-                // totalPrice  = 6 * 50 = 300
-                int totalPrice = totalNumberOfDiscountedSKUsInCart * originalPriceOfDiscountedSKU;
+                // (3 * 150) - 130 = 20 per 3As
+                int discountPerUnit = (originalPriceOfDiscountedSKU * _numOfItems) - _fixedPrice;
 
-                // priceAfterDiscount = 2 * 130 = 260
-                int priceAfterDiscount = discountedUnit * _fixedPrice;
-
-                // savings = 300 - 260 = 40
-                savings = totalPrice - priceAfterDiscount;
+                // = 20 * 2 = 40
+                savings = discountPerUnit * noOfDiscountedUnits;                
             }
 
             return savings;

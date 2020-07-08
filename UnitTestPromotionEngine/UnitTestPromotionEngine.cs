@@ -152,5 +152,16 @@ namespace UnitTestPromotionEngine
             int finalTotal = promotionEngine.GetFinalTotal();
             Assert.AreEqual(expectedTotal, finalTotal);
         }
+
+        [TestMethod]
+        [DataRow("A, A, A, B, B, C, D", 130 + 45 + 30)]
+        [DataRow("A, A, A, B, B, C, D, A, B, C", 130 + 45 + 30 + 50 + 30 + 20)]
+        [DataRow("A, A, A, B, B, C, D, A, B, D", 130 + 45 + 30 + 50 + 30 + 15)]
+        public void Test_Combine_ALl_Promotions_Wih_Other_SKUs(string cart, int expectedTotal)
+        {
+            PromotionEngine promotionEngine = new PromotionEngine(cart);
+            int finalTotal = promotionEngine.GetFinalTotal();
+            Assert.AreEqual(expectedTotal, finalTotal);
+        }
     }
 }

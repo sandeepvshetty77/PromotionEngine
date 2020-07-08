@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PromotionEngineNS
 {
+    // This is a placeholder for database which will hold all the SKUs in stock
+    // There is no check made on the number of items  in stock. If the SKUId is valid then the stock info object is returned.
     public static class Inventory
     {
         private static List<SKU> _itemsInStore = null;
@@ -14,28 +13,30 @@ namespace PromotionEngineNS
         {
             _itemsInStore = new List<SKU>();
         }
+
         public static void AddToStore(SKU sku)
         {
-            _itemsInStore.Add(sku);
+            if (sku != null)
+                _itemsInStore.Add(sku);
         }
 
-        public static SKU GetSKUIfInStore(char skuId)
+        public static SKU GetSKUFromStore(char skuId)
         {
             SKU skuFound = null;
 
             if (_itemsInStore.Count > 0)
             {
-                skuFound = _itemsInStore.FirstOrDefault(x => x.Id.Equals(char.ToUpperInvariant(skuId)));
+                skuFound = _itemsInStore.FirstOrDefault(sku => char.ToUpperInvariant(sku.Id).Equals(char.ToUpperInvariant(skuId)));
             }
 
             return skuFound;
         }
 
-        public static int GetPriceOfSKUBySKUId(char skuId)
+        public static int GetPriceBySKUId(char skuId)
         {
             SKU skuTemp = null;
             int skuPrice = 0;
-            skuTemp = Inventory.GetSKUIfInStore(skuId);
+            skuTemp = Inventory.GetSKUFromStore(skuId);
             if (skuTemp != null)
             {
                 skuPrice = skuTemp.Price;

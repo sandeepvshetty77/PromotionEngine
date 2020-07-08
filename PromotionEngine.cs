@@ -1,54 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PromotionEngineNS
 {
     public class PromotionEngine
     {
         private string _cart;
-        private int _finalTotal = 0;
 
         public PromotionEngine()
         {
             _cart = String.Empty;
-            _finalTotal = 0;
         }
 
         public PromotionEngine(string cart)
         {
-            _cart = cart.Trim();
-            _finalTotal = 0;
+            if (cart != null)
+                _cart = cart.Trim();
         }
 
         public int GetFinalTotal()
         {
             int savings = 0;
+            int finalTotal = 0;
 
             if (_cart.Length == 0)
             {
-                _finalTotal = 0;
+                finalTotal = 0;
             }
             else
             {
                 List<SKU> skuList = getSKUsFromCart(_cart);
 
-                List<IPromotion> promotiontList = PromotionStore.GetAllPromotions();
-                foreach (IPromotion promotion in promotiontList)
-                {
-                    savings += promotion.GetSavingsOnDiscount(skuList);
-                }
+                savings = getSavingsForExistingPromotions(skuList);
+                finalTotal = getTotalPriceOfCart(skuList);
 
-                foreach (SKU sku in skuList)
-                {
-                    _finalTotal += sku.Price;
-                }
-
-                _finalTotal = _finalTotal - savings;
+                finalTotal = finalTotal - savings;
             }
-            return _finalTotal;
+            return finalTotal;
+        }
+
+        private int getTotalPriceOfCart(List<SKU> skuList)
+        {
+            int finalTotal = 0;
+            // Calculate total price
+            foreach (SKU sku in skuList)
+            {
+                finalTotal += sku.Price;
+            }
+            return finalTotal;
+        }
+
+        private int getSavingsForExistingPromotions(List<SKU> skuList)
+        {
+            int savings = 0;
+            // Get all the active promotions
+            List<IPromotion> promotiontList = PromotionStore.GetAllPromotions();
+
+            // Send the cart to each promotion to get savings on each
+            foreach (IPromotion promotion in promotiontList)
+            {
+                savings += promotion.GetSavingsOnDiscount(skuList);
+            }
+
+            return savings;
         }
 
         private List<SKU> getSKUsFromCart(string cart)
@@ -63,7 +77,7 @@ namespace PromotionEngineNS
                 skuId = skuIds[index].Trim().ToUpperInvariant();
                 if (skuId.Length == 1)
                 {
-                    sku = Inventory.GetSKUIfInStore(skuId[0]);
+                    sku = Inventory.GetSKUFromStore(skuId[0]);
                     if (sku != null)
                     {
                         if (skuList == null)
