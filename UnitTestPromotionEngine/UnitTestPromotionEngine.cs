@@ -94,9 +94,32 @@ namespace UnitTestPromotionEngine
         }
 
         [TestMethod]
+        [DataRow("A, A, A, B, C", 130+30+20)]
+        [DataRow("A, A, A, A, A, A, C, C", (130 + 130 + 20 + 20))]
+        [DataRow("A, A, A, A, A, A, B, D", (130 + 130 + 30 + 15))]
+        public void Test_Buy_n_Items_of_SKU_A_With_Other_SKUs(string cart, int expectedTotal)
+        {
+            PromotionEngine promotionEngine = new PromotionEngine(cart);
+            int finalTotal = promotionEngine.GetFinalTotal();
+            Assert.AreEqual(expectedTotal, finalTotal);
+        }
+
+        [TestMethod]
         [DataRow("B, B", 45)]
         [DataRow("B, B, B, B", (45 + 45))]
         public void Test_Buy_n_Items_of_SKU_B_ForFixed_Price(string cart, int expectedTotal)
+        {
+            PromotionEngine promotionEngine = new PromotionEngine(cart);
+            int finalTotal = promotionEngine.GetFinalTotal();
+            Assert.AreEqual(expectedTotal, finalTotal);
+        }
+
+        [TestMethod]
+        [DataRow("B, B, C", 45 + 20)]
+        [DataRow("B, B, B, B, C, C", (45 + 45 + 20 + 20))]
+        [DataRow("B, B, D", 45 + 15)]
+        [DataRow("B, B, B, B, C, A", (45 + 45 + 20 + 50))]
+        public void Test_Buy_n_Items_of_SKU_B_With_Other_SKUs(string cart, int expectedTotal)
         {
             PromotionEngine promotionEngine = new PromotionEngine(cart);
             int finalTotal = promotionEngine.GetFinalTotal();
