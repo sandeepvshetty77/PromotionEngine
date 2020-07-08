@@ -30,5 +30,17 @@ namespace PromotionEngineNS
 
             return skuFound;
         }
+
+        public static int GetPriceOfSKUBySKUId(char skuId)
+        {
+            SKU skuTemp = null;
+            int skuPrice = 0;
+            skuTemp = Inventory.GetSKUIfInStore(skuId);
+            if (skuTemp != null)
+            {
+                skuPrice = skuTemp.Price;
+            }
+            return skuPrice;
+        }
     }
 }

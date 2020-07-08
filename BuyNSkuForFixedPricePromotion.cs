@@ -1,9 +1,4 @@
-﻿using PromotionEngineNS;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace PromotionEngineNS
 {
@@ -25,11 +20,9 @@ namespace PromotionEngineNS
             int savings = 0;
             int totalNumberOfDiscountedSKUsInCart = 0;
 
-            SKU sku = Inventory.GetSKUIfInStore(_skuId);
-            if (sku == null)
+            int originalPriceOfDiscountedSKU = Inventory.GetPriceOfSKUBySKUId(_skuId);
+            if (originalPriceOfDiscountedSKU == 0)
                 return savings;
-
-            int originalPriceOfDiscountedSKU = sku.Price;
 
             foreach (SKU skuItem in skus)
             {

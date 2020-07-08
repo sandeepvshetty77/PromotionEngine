@@ -18,18 +18,7 @@ namespace PromotionEngineNS
             _firstSKU = firstSKU;
             _secondSKU = secondSKU;
             _fixedPrice = fixedPrice;
-        }
-        private int getOriginalPriceOfSKU(char skuId)
-        {
-            SKU skuTemp = null;
-            int originalPriceOfSKU = 0;
-            skuTemp = Inventory.GetSKUIfInStore(skuId);
-            if (skuTemp != null)
-            {
-                originalPriceOfSKU = skuTemp.Price;
-            }
-            return originalPriceOfSKU;
-        }
+        }        
 
         public int GetSavingsOnDiscount(List<SKU> skus)
         {
@@ -37,8 +26,8 @@ namespace PromotionEngineNS
             int countOfFirstSKU = 0;
             int totalPriceForFirstAndSecondSkus = 0;
             int countOfSecondSKU = 0;
-            int originalPriceOfFirstSku = getOriginalPriceOfSKU(_firstSKU);
-            int originalPriceOfSecondSku = getOriginalPriceOfSKU(_secondSKU);
+            int originalPriceOfFirstSku = Inventory.GetPriceOfSKUBySKUId(_firstSKU);
+            int originalPriceOfSecondSku = Inventory.GetPriceOfSKUBySKUId(_secondSKU);
 
             foreach (SKU sku in skus)
             {
