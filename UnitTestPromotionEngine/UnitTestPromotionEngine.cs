@@ -23,7 +23,7 @@ namespace UnitTestPromotionEngine
         }
 
         [TestMethod]
-        public void TestNullCart()
+        public void Test_Null_Cart()
         {
             PromotionEngine promotionEngine = new PromotionEngine();
             int finalTotal = promotionEngine.GetFinalTotal();
@@ -31,7 +31,7 @@ namespace UnitTestPromotionEngine
         }
 
         [TestMethod]
-        public void TestEmptyCart()
+        public void Test_Empty_Cart()
         {
             PromotionEngine promotionEngine = new PromotionEngine("");
             int finalTotal = promotionEngine.GetFinalTotal();
@@ -43,7 +43,7 @@ namespace UnitTestPromotionEngine
         [DataRow("B", 30)]
         [DataRow("C", 20)]
         [DataRow("D", 15)]
-        public void TestOneValidItemInCart(string cart, int expectedTotal)
+        public void Test_One_Valid_Item_In_Cart(string cart, int expectedTotal)
         {
             PromotionEngine promotionEngine = new PromotionEngine(cart);
             int finalTotal = promotionEngine.GetFinalTotal();
@@ -70,6 +70,16 @@ namespace UnitTestPromotionEngine
         [DataRow("D, A, PQR", (15 + 50))]
         [DataRow("D, a, 12", (15 + 50))]
         public void Test_Multiple_Valid_And_Invalid_SKUs_In_Cart(string cart, int expectedTotal)
+        {
+            PromotionEngine promotionEngine = new PromotionEngine(cart);
+            int finalTotal = promotionEngine.GetFinalTotal();
+            Assert.AreEqual(expectedTotal, finalTotal);
+        }
+
+        [TestMethod]
+        [DataRow("A, A, A", 130)]
+        //[DataRow("A, A, A, A, A, A", (130 + 130))]
+        public void Test_Buy_n_Items_of_SKU_ForFixed_Price(string cart, int expectedTotal)
         {
             PromotionEngine promotionEngine = new PromotionEngine(cart);
             int finalTotal = promotionEngine.GetFinalTotal();

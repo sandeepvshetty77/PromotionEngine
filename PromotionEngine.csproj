@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuyNSkuForFixedPricePromotion.cs" />
+    <Compile Include="IPromotion.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="PromotionEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
