@@ -45,6 +45,7 @@
     <Compile Include="IPromotion.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="PromotionEngine.cs" />
+    <Compile Include="PromotionStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SKU.cs" />
   </ItemGroup>
