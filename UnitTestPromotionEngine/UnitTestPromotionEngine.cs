@@ -13,6 +13,7 @@ namespace UnitTestPromotionEngine
         {
             PromotionStore.AddPromotion(new BuyNSkuForFixedPricePromotion('A', 3, 130));
             PromotionStore.AddPromotion(new BuyNSkuForFixedPricePromotion('B', 2, 45));
+            PromotionStore.AddPromotion(new BuySKU1andSKU2ForFixedPrice('C', 'D', 30));
         }
 
         [TestInitialize]
@@ -128,6 +129,10 @@ namespace UnitTestPromotionEngine
 
         [TestMethod]
         [DataRow("C, D", 30)]
+        [DataRow("C, D, C, D", (30 + 30))]
+        [DataRow("C, C, D, D", (30 + 30))]
+        [DataRow("C, D, C, D, D", (30 + 30 + 15))]
+        [DataRow("C, D, C, D, C, C", (30 + 30 + 20 + 20))]
         public void Test_Buy_SKU1_and_SKU2_ForFixed_Price(string cart, int expectedTotal)
         {
             PromotionEngine promotionEngine = new PromotionEngine(cart);
