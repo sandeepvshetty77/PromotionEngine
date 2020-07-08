@@ -14,5 +14,21 @@ namespace PromotionEngineNS
         {
             _itemsInStore = new List<SKU>();
         }
+        public static void AddToStore(SKU sku)
+        {
+            _itemsInStore.Add(sku);
+        }
+
+        public static SKU GetSKUIfInStore(char skuId)
+        {
+            SKU skuFound = null;
+
+            if (_itemsInStore.Count > 0)
+            {
+                skuFound = _itemsInStore.FirstOrDefault(x => x.Id == char.ToUpperInvariant(skuId));
+            }
+
+            return skuFound;
+        }
     }
 }

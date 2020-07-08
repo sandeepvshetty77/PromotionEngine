@@ -7,6 +7,21 @@ namespace UnitTestPromotionEngine
     [TestClass]
     public class UnitTestPromotionEngine
     {
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            SKU skuA = new SKU('A', 50);
+            SKU skuB = new SKU('B', 30);
+            SKU skuC = new SKU('C', 20);
+            SKU skuD = new SKU('D', 15);
+
+            Inventory.AddToStore(skuA);
+            Inventory.AddToStore(skuB);
+            Inventory.AddToStore(skuC);
+            Inventory.AddToStore(skuD);
+        }
+
         [TestMethod]
         public void TestNullCart()
         {

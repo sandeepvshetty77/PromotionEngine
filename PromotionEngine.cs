@@ -25,7 +25,29 @@ namespace PromotionEngineNS
 
         public int GetFinalTotal()
         {
+            if (_cart.Length == 0)
+            {
+                _finalTotal = 0;
+            }
+            else
+            {
+                SKU sku = getSKUsFromCart(_cart);
+                _finalTotal = sku.Price;                
+            }
             return _finalTotal;
+        }
+
+        private SKU getSKUsFromCart(string cart)
+        {
+            string skuId = String.Empty;
+            SKU sku = null;
+            skuId = cart.Trim().ToUpperInvariant();
+            if (skuId.Length == 1)
+            {
+                sku = Inventory.GetSKUIfInStore(skuId[0]);
+            }
+
+            return sku;
         }
     }
 }
