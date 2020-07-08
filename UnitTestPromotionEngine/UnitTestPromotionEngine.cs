@@ -7,6 +7,12 @@ namespace UnitTestPromotionEngine
     [TestClass]
     public class UnitTestPromotionEngine
     {
+        // Add all the promotions available to the store upfront
+        [ClassInitialize]
+        public static void Init(TestContext testContext)
+        {
+            PromotionStore.AddPromotion(new BuyNSkuForFixedPricePromotion('A', 3, 130));
+        }
 
         [TestInitialize]
         public void Initialize()
@@ -78,12 +84,12 @@ namespace UnitTestPromotionEngine
 
         [TestMethod]
         [DataRow("A, A, A", 130)]
-        //[DataRow("A, A, A, A, A, A", (130 + 130))]
-        public void Test_Buy_n_Items_of_SKU_ForFixed_Price(string cart, int expectedTotal)
+        [DataRow("A, A, A, A, A, A", (130 + 130))]
+        public void Test_Buy_n_Items_of_SKU_A_ForFixed_Price(string cart, int expectedTotal)
         {
             PromotionEngine promotionEngine = new PromotionEngine(cart);
             int finalTotal = promotionEngine.GetFinalTotal();
             Assert.AreEqual(expectedTotal, finalTotal);
-        }
+        }       
     }
 }

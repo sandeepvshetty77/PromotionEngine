@@ -25,6 +25,8 @@ namespace PromotionEngineNS
 
         public int GetFinalTotal()
         {
+            int savings = 0;
+
             if (_cart.Length == 0)
             {
                 _finalTotal = 0;
@@ -32,11 +34,19 @@ namespace PromotionEngineNS
             else
             {
                 List<SKU> skuList = getSKUsFromCart(_cart);
+
+                List<IPromotion> promotiontList = PromotionStore.GetAllPromotions();
+                foreach (IPromotion promotion in promotiontList)
+                {
+                    savings += promotion.GetSavingsOnDiscount(skuList);
+                }
+
                 foreach (SKU sku in skuList)
                 {
                     _finalTotal += sku.Price;
                 }
-                
+
+                _finalTotal = _finalTotal - savings;
             }
             return _finalTotal;
         }
