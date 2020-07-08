@@ -12,6 +12,7 @@ namespace UnitTestPromotionEngine
         public static void Init(TestContext testContext)
         {
             PromotionStore.AddPromotion(new BuyNSkuForFixedPricePromotion('A', 3, 130));
+            PromotionStore.AddPromotion(new BuyNSkuForFixedPricePromotion('B', 2, 45));
         }
 
         [TestInitialize]
@@ -90,6 +91,16 @@ namespace UnitTestPromotionEngine
             PromotionEngine promotionEngine = new PromotionEngine(cart);
             int finalTotal = promotionEngine.GetFinalTotal();
             Assert.AreEqual(expectedTotal, finalTotal);
-        }       
+        }
+
+        [TestMethod]
+        [DataRow("B, B", 45)]
+        [DataRow("B, B, B, B", (45 + 45))]
+        public void Test_Buy_n_Items_of_SKU_B_ForFixed_Price(string cart, int expectedTotal)
+        {
+            PromotionEngine promotionEngine = new PromotionEngine(cart);
+            int finalTotal = promotionEngine.GetFinalTotal();
+            Assert.AreEqual(expectedTotal, finalTotal);
+        }
     }
 }
