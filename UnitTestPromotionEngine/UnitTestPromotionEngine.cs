@@ -125,5 +125,14 @@ namespace UnitTestPromotionEngine
             int finalTotal = promotionEngine.GetFinalTotal();
             Assert.AreEqual(expectedTotal, finalTotal);
         }
+
+        [TestMethod]
+        [DataRow("C, D", 30)]
+        public void Test_Buy_SKU1_and_SKU2_ForFixed_Price(string cart, int expectedTotal)
+        {
+            PromotionEngine promotionEngine = new PromotionEngine(cart);
+            int finalTotal = promotionEngine.GetFinalTotal();
+            Assert.AreEqual(expectedTotal, finalTotal);
+        }
     }
 }

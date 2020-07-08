@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuyNSkuForFixedPricePromotion.cs" />
+    <Compile Include="BuySKU1andSKU2ForFixedPrice.cs" />
     <Compile Include="IPromotion.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="PromotionEngine.cs" />

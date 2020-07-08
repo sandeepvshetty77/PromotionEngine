@@ -35,7 +35,7 @@ namespace PromotionEngineNS
             {
                 if (skuItem.Id.Equals(_skuId))
                 {
-                    totalNumberOfDiscountedSKUsInCart++;                    
+                    totalNumberOfDiscountedSKUsInCart++;                // say 6 As      
                 }
             }
 
